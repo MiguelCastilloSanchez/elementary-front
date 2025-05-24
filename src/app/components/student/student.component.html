@@ -1,0 +1,38 @@
+<h2>Gestión de Estudiantes</h2>
+
+<form [formGroup]="studentForm" (ngSubmit)="submitForm()">
+  <label>Matrícula:</label>
+  <input formControlName="enrollment" />
+
+  <label>Nombre:</label>
+  <input formControlName="name" />
+
+  <label>Apellido:</label>
+  <input formControlName="lastName" />
+
+  <label>Grado:</label>
+  <select formControlName="grade">
+    <option value="FIRST">FIRST</option>
+    <option value="SECOND">SECOND</option>
+    <option value="THIRD">THIRD</option>
+    <option value="FOURTH">FOURTH</option>
+    <option value="FIFTH">FIFTH</option>
+    <option value="SIXTH">SIXTH</option>
+  </select>
+
+  <label>Email:</label>
+  <input formControlName="email" />
+
+  <button type="submit">{{ editing ? 'Actualizar' : 'Agregar' }}</button>
+  <button type="button" *ngIf="editing" (click)="cancelEdit()">Cancelar</button>
+</form>
+
+<hr />
+
+<ul>
+  <li *ngFor="let student of students">
+    {{ student.name }} {{ student.lastName }} - {{ student.enrollment }}
+    <button (click)="editStudent(student)">Editar</button>
+    <button (click)="deleteStudent(student.enrollment!)">Eliminar</button>
+  </li>
+</ul>
