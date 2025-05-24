@@ -66,20 +66,4 @@ Then add following code into angular.json:
 ]
 ```
 
-
-![Angular](src/assets/images/00.jpg)
-
-![Angular](src/assets/images/01.jpg)
-
-![Angular](src/assets/images/02.jpg)
-
-![Angular](src/assets/images/03.jpg)
-
-![Angular](src/assets/images/04.jpg)
-
-![Angular](src/assets/images/05.jpg)
-
-![Angular](src/assets/images/06.jpg)
-
-![Angular](src/assets/images/07.jpg)
 # elementary-front

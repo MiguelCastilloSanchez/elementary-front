@@ -5,16 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AddClientComponent } from './components/add-client/add-client.component';
-import { ClientDetailsComponent } from './components/client-details/client-details.component';
-import { ClientsListComponent } from './components/clients-list/clients-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddClientComponent,
-    ClientDetailsComponent,
-    ClientsListComponent
   ],
   imports: [
     BrowserModule,

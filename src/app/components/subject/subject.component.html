@@ -1,0 +1,30 @@
+<h2>Gestión de Materias</h2>
+
+<form (ngSubmit)="saveSubject()">
+  <label>Nombre de la materia</label>
+  <input [(ngModel)]="subject.subjectName" name="subjectName" required />
+
+  <label>Descripción</label>
+  <input [(ngModel)]="subject.description" name="description" required />
+
+  <label>Grado</label>
+  <select [(ngModel)]="subject.grade" name="grade" required>
+    <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+  </select>
+
+  <div class="buttons">
+    <button type="submit">{{ isEditing ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+  </div>
+</form>
+
+<hr />
+
+<ul>
+  <li *ngFor="let s of subjects; index as i">
+    <strong>{{ s.subjectName }}</strong> - {{ s.grade }}<br />
+    {{ s.description }}<br />
+    <button (click)="editSubject(s, i)">Editar</button>
+    <button (click)="deleteSubject(s.subjectName!)">Eliminar</button>
+  </li>
+</ul>

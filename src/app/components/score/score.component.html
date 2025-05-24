@@ -1,0 +1,35 @@
+<h2>Gestión de Calificaciones</h2>
+
+<form (ngSubmit)="saveScore()">
+  <label>Matrícula del estudiante</label>
+  <input [(ngModel)]="score.enrollment" name="enrollment" required />
+
+  <label>Nombre de la materia</label>
+  <input [(ngModel)]="score.subjectName" name="subjectName" required />
+
+  <label>Calificación</label>
+  <input type="number" [(ngModel)]="score.score" name="score" min="0" max="100" required />
+
+  <label>Fecha de inicio</label>
+  <input type="date" [(ngModel)]="score.startDate" name="startDate" required />
+
+  <label>Fecha de fin</label>
+  <input type="date" [(ngModel)]="score.endDate" name="endDate" required />
+
+  <div class="buttons">
+    <button type="submit">{{ isEditing ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+  </div>
+</form>
+
+<hr />
+
+<ul>
+  <li *ngFor="let s of scores">
+    <strong>{{ s.subjectName }}</strong> - {{ s.enrollment }}<br />
+    Calificación: {{ s.score }}<br />
+    {{ s.startDate }} a {{ s.endDate }}<br />
+    <button (click)="editScore(s)">Editar</button>
+    <button (click)="deleteScore(s.id)">Eliminar</button>
+  </li>
+</ul>
