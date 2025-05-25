@@ -2,10 +2,10 @@
 
 <form (ngSubmit)="saveScore()">
   <label>Matrícula del estudiante</label>
-  <input [(ngModel)]="score.enrollment" name="enrollment" required />
+  <input [(ngModel)]="score.student!.enrollment" name="enrollment" required />
 
   <label>Nombre de la materia</label>
-  <input [(ngModel)]="score.subjectName" name="subjectName" required />
+  <input [(ngModel)]="score.subject!.subjectName" name="subjectName" required />
 
   <label>Calificación</label>
   <input type="number" [(ngModel)]="score.score" name="score" min="0" max="100" required />
@@ -26,10 +26,10 @@
 
 <ul>
   <li *ngFor="let s of scores">
-    <strong>{{ s.subjectName }}</strong> - {{ s.enrollment }}<br />
+    <strong>{{ s.subject?.subjectName }}</strong> - {{ s.student?.enrollment }}<br />
     Calificación: {{ s.score }}<br />
     {{ s.startDate }} a {{ s.endDate }}<br />
     <button (click)="editScore(s)">Editar</button>
-    <button (click)="deleteScore(s.id)">Eliminar</button>
+    <button (click)="deleteScore(s.scoreId)">Eliminar</button>
   </li>
 </ul>

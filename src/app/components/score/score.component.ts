@@ -13,7 +13,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class ScoreComponent implements OnInit {
   scores: Score[] = [];
-  score: Score = {};
+  score: Score = {
+    student: {},
+    subject: {}
+  };
   isEditing = false;
   currentId: number | null = null;
 
@@ -29,22 +32,35 @@ export class ScoreComponent implements OnInit {
     });
   }
 
+
   saveScore(): void {
-    if (this.isEditing && this.currentId !== null) {
-      this.scoreService.update(this.currentId, this.score).subscribe(() => {
-        this.getScores();
-        this.resetForm();
-      });
-    } else {
-      this.scoreService.create(this.score).subscribe(() => {
-        this.getScores();
-        this.resetForm();
-      });
-    }
+  const dto = {
+    enrollment: this.score.student?.enrollment ?? '',
+    subjectName: this.score.subject?.subjectName ?? '',
+    score: this.score.score,
+    startDate: this.score.startDate,
+    endDate: this.score.endDate,
+  };
+
+  if (this.isEditing && this.currentId !== null) {
+    this.scoreService.update(this.currentId, dto).subscribe(() => {
+      this.getScores();
+      this.resetForm();
+    });
+  } else {
+    this.scoreService.create(dto).subscribe(() => {
+      this.getScores();
+      this.resetForm();
+    });
   }
+}
+
 
   editScore(score: Score): void {
-    this.score = { ...score };
+    this.score = { ...score,
+      student: { ...score.student },
+      subject: { ...score.subject }
+     };
     this.currentId = (score as any).scoreId ?? null;
     this.isEditing = true;
   }
@@ -56,7 +72,10 @@ export class ScoreComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.score = {};
+    this.score = {
+      student: {},
+      subject: {}
+    };
     this.isEditing = false;
     this.currentId = null;
   }

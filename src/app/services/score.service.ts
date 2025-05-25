@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Score } from '../models/score.model';
 
-const baseUrl = 'http://localhost:8081';
+const baseUrl = 'http://localhost:8080';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class scoreService {
     return this.http.get<Score>(`${baseUrl+"/score"}/${id}`);
   }
 
-  create(data: any): Observable<any> {
+  create(data: Score): Observable<any> {
     return this.http.post(baseUrl+"/score", data);
   }
 
