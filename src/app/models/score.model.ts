@@ -1,5 +1,5 @@
 export class Score {
-    id?: number;
+    scoreId?: number;
     enrollment?: string;
     subjectName?: string;
     score?: number;
