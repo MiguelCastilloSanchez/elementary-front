@@ -1,0 +1,120 @@
+<h2>Reportes</h2>
+
+<div class="button-group">
+  <button (click)="showSearchForm('student')">Buscar Alumno</button>
+  <button (click)="showSearchForm('subject')">Buscar Materia</button>
+  <button (click)="loadRegularStudents()">Alumnos Regulares</button>
+  <button (click)="loadIrregularStudents()">Alumnos Irregulares</button>
+</div>
+
+
+<div *ngIf="activeForm === 'student'">
+  <h3>Buscar Alumno</h3>
+  <form (ngSubmit)="searchStudent()">
+    <label>Matrícula:</label>
+    <input [(ngModel)]="studentEnrollment" name="enrollment" required />
+    <button type="submit">Buscar</button>
+  </form>
+</div>
+
+<div *ngIf="activeForm === 'subject'">
+  <h3>Buscar Materia</h3>
+  <form (ngSubmit)="searchSubject()">
+    <label>Nombre de Materia:</label>
+    <input [(ngModel)]="subjectName" name="subjectName" required />
+    <button type="submit">Buscar</button>
+  </form>
+</div>
+
+
+<div *ngIf="regularStudents.length > 0">
+  <h3>Alumnos Regulares</h3>
+  <ul>
+    <li *ngFor="let student of regularStudents">
+      {{ student.name }} {{ student.lastName }} - {{ student.enrollment }}
+    </li>
+  </ul>
+</div>
+
+
+<div *ngIf="irregularStudents.length > 0">
+  <h3>Alumnos Irregulares</h3>
+  <ul>
+    <li *ngFor="let student of irregularStudents">
+      {{ student.name }} - {{ student.enrollment }}
+    </li>
+  </ul>
+</div>
+
+
+<div *ngIf="searchedStudent">
+  <h2>Reporte de {{ searchedStudent.scoresList[0]?.student.name }} {{ searchedStudent.scoresList[0]?.student.lastName }}</h2>
+
+  <div class="studentInfo">
+  <p><strong>Matrícula:</strong> {{ searchedStudent.scoresList[0]?.student.enrollment }}</p>
+  <p><strong>Email:</strong> {{ searchedStudent.scoresList[0]?.student.email }}</p>
+  <p><strong>Grado:</strong> {{ searchedStudent.scoresList[0]?.student.grade }}</p>
+  </div>
+
+  <h3>Calificaciones</h3>
+  <table class="scoreTable">
+    <thead>
+      <tr>
+        <th>Materia</th>
+        <th>Descripción</th>
+        <th>Calificación</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let score of searchedStudent.scoresList">
+        <td>{{ score.subject.subjectName }}</td>
+        <td>{{ score.subject.description }}</td>
+        <td>{{ score.score }}</td>
+        <td>{{ score.startDate }}</td>
+        <td>{{ score.endDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="average">Promedio General: {{ searchedStudent.averageGrade }}</h3>
+</div>
+
+
+
+<div *ngIf="searchedSubject">
+  <h2>Reporte de la materia {{ searchedSubject.scoresList[0]?.subject.subjectName }}</h2>
+
+  <div class="subjectInfo">
+    <p><strong>Descripción:</strong> {{ searchedSubject.scoresList[0]?.subject.description }}</p>
+    <p><strong>Grado:</strong> {{ searchedSubject.scoresList[0]?.subject.grade }}</p>
+  </div>
+
+  <h3>Calificaciones</h3>
+  <table class="scoreTable">
+    <thead>
+      <tr>
+        <th>Alumno</th>
+        <th>Matrícula</th>
+        <th>Email</th>
+        <th>Calificación</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let score of searchedSubject.scoresList">
+        <td>{{ score.student.name }} {{ score.student.lastName }}</td>
+        <td>{{ score.student.enrollment }}</td>
+        <td>{{ score.student.email }}</td>
+        <td>{{ score.score }}</td>
+        <td>{{ score.startDate }}</td>
+        <td>{{ score.endDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="average">Promedio General: {{ searchedSubject.averageGrade }}</h3>
+</div>
+
