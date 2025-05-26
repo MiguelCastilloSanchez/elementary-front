@@ -5,6 +5,7 @@ import { reportService } from '../../services/report.service';
 import { Student } from '../../models/student.model';
 import { IrregularStudent } from '../../models/irregularStudent.model';
 
+
 @Component({
   selector: 'app-report',
   standalone: true,
@@ -22,11 +23,13 @@ searchedSubject: any = null;
 
 regularStudents: Student[] = [];
 irregularStudents: IrregularStudent[] = [];
+groupedRegularStudents: { [grade: string]: Student[] } = {};
 groupedIrregularStudents: { [grade: string]: IrregularStudent[] } = {};
 
 constructor(private reportService: reportService) {}
 
 showSearchForm(type: 'student' | 'subject') {
+  this.clearReport();
   this.activeForm = type;
 }
 
@@ -38,27 +41,50 @@ showSearchForm(type: 'student' | 'subject') {
   }
 
 searchSubject() {
-    this.clearReport();
+  this.clearReport();
     this.reportService.getSubjectReport(this.subjectName).subscribe(data => {
       this.searchedSubject = data;
     });
 }
 
 loadRegularStudents() {
-    this.clearReport();
-    this.reportService.getRegularStudents().subscribe(data => {
-      this.regularStudents = data;
-    });
+  this.clearReport();
+  this.reportService.getRegularStudents().subscribe(data => {
+    this.groupedRegularStudents = this.groupByGrade(data);
+  });
+}
+
+
+
+groupByGrade(students: Student[]): { [grade: string]: Student[] } {
+  const grouped: { [grade: string]: Student[] } = {};
+
+  for (const student of students) {
+    const grade = student.grade
+
+    if (!grouped[grade]) {
+      grouped[grade] = [];
+    }
+
+    grouped[grade].push(student);
+  }
+
+  return grouped;
 }
 
 loadIrregularStudents() {
   this.clearReport();
   this.reportService.getIrregularStudents().subscribe(data => {
-    // Combina todos los arrays de estudiantes en uno solo
-    const allIrregulars = Object.values(data).flat();
-    this.irregularStudents = allIrregulars;
+    this.groupedIrregularStudents = data;
   });
 }
+
+getIrregularGrades(): string[] {
+  const gradeOrder = ['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH', 'SIXTH'];
+  return gradeOrder.filter(grade => grade in this.groupedIrregularStudents);
+}
+
+
 
 clearReport(){
   this.activeForm = null;
@@ -66,9 +92,12 @@ clearReport(){
   this.searchedSubject = null;
   this.regularStudents = [];
   this.irregularStudents = [];
-
+  this.groupedRegularStudents = {};
+  this.groupedIrregularStudents = {};
 }
 
-
+getGrades(): string[] {
+  return Object.keys(this.groupedRegularStudents);
+}
 
 }

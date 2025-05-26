@@ -25,7 +25,7 @@ export class reportService {
     return this.http.get<any[]>(`${baseUrl}/regular`);
   }
 
-  getIrregularStudents(): Observable<IrregularStudent[]> {
-    return this.http.get<any[]>(`${baseUrl}/irregular`);
+  getIrregularStudents(): Observable<{ [grade: string]: IrregularStudent[] }> {
+    return this.http.get<{ [grade: string]: IrregularStudent[] }>(`${baseUrl}/irregular`);
   }
 }

@@ -36,6 +36,18 @@
   </ul>
 </div>
 
+<div *ngIf="getGrades().length > 0">
+  <h3>Alumnos Regulares</h3>
+  <div *ngFor="let grade of getGrades()">
+    <h4>Grado: {{ grade }}</h4>
+    <ul>
+      <li *ngFor="let student of groupedRegularStudents[grade]">
+        {{ student.name }} {{ student.lastName }} - {{ student.enrollment }}
+      </li>
+    </ul>
+  </div>
+</div>
+
 
 <div *ngIf="irregularStudents.length > 0">
   <h3>Alumnos Irregulares</h3>
@@ -44,6 +56,19 @@
       {{ student.name }} {{ student.lastName}} - {{ student.enrollment }}
     </li>
   </ul>
+</div>
+
+<div *ngIf="getIrregularGrades().length > 0">
+  <h3>Alumnos Irregulares</h3>
+  <div *ngFor="let grade of getIrregularGrades()">
+    <h4>Grado: {{ grade }}</h4>
+    <ul>
+      <li *ngFor="let student of groupedIrregularStudents[grade]">
+        {{ student.name }} {{ student.enrollment }}<br/>
+        Número de materias reprobadas: {{ student.numberOfFailedSubjects}}
+      </li>
+    </ul>
+  </div>
 </div>
 
 
