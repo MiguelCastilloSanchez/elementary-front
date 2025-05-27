@@ -1,7 +1,6 @@
-export class Student {
+export class IrregularStudent {
     enrollment?: string;
     name?: string;
     lastName?: string;
-    grade!: string;
-    email?: string;
+    numberOfFailedSubjects?: number;
   }
